@@ -1,0 +1,278 @@
+@import "tailwindcss";
+
+/* -----------------------------------------------------------
+   1. THEME & TAILWIND CONFIG
+   ----------------------------------------------------------- */
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-main: var(--main-color);
+  --color-main-hover: var(--main-hover-color);
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+}
+
+/* -----------------------------------------------------------
+   2. GLOBAL VARIABLES (Single Source of Truth)
+   ----------------------------------------------------------- */
+:root {
+  /* Brand Colors */
+  --main-color: #FF0000;
+  --main-text-color: #ffffff;
+  --main-hover-color: #88898b;
+  --main-accent-bg: rgba(255, 4, 4, 0.15);
+
+  /* Light Mode Surfaces */
+  --bg-primary: #f1f1f1;
+  --bg-secondary: #ffffff;
+  --text-base: #1a1a1a;
+  --menu-text: #4b5563;
+  --menu-icon: #4b5563;
+}
+
+.dark {
+  /* Brand Colors Dark */
+  --main-color: #FF0000;
+  --main-hover-color: #88898b;
+
+  /* Dark Mode Surfaces */
+  --bg-primary: #121212;
+  --bg-secondary: #0f172a; /* Slate-950 */
+  --text-base: #f1f1f1;
+  --menu-text: #cbd5e1;
+  --menu-icon: #cbd5e1;
+}
+
+/* -----------------------------------------------------------
+   3. CORE LAYOUT & BASE STYLES
+   ----------------------------------------------------------- */
+body {
+  font-family: "Montserrat", sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-base);
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+/* Universal button style */
+.btn-dashboard {
+  background-color: var(--main-color) !important;
+  color: var(--main-text-color) !important;
+  padding: 8px 20px !important;
+  border-radius: 4px !important;
+  transition: background-color 0.3s !important;
+}
+
+/* Scrollbar and Toasts */
+::-webkit-scrollbar {
+  display: none;
+}
+#toast-root {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+/* -----------------------------------------------------------
+   4. ANT DESIGN: SHARED UI (Menu, Sidebar, Pagination)
+   ----------------------------------------------------------- */
+/* Menu text & Icons */
+.ant-menu-item,
+.ant-menu-submenu-title {
+  color: var(--menu-text) !important;
+}
+.ant-menu-item .anticon,
+.ant-menu-item svg {
+  color: var(--menu-icon);
+  transition: color 0.3s;
+}
+
+/* Hover & Selection States */
+.ant-menu-item-selected,
+.ant-menu-item:hover,
+.ant-menu-submenu-title:hover,
+.ant-menu-item-selected .anticon,
+.ant-menu-item-selected svg,
+.ant-menu-item:hover svg {
+  color: var(--main-color) !important;
+}
+
+.dark .ant-menu.ant-menu-dark,
+.dark .ant-menu-dark .ant-menu-sub {
+  background: transparent !important;
+}
+.dark .ant-menu-item-selected {
+  background-color: var(--main-accent-bg) !important;
+}
+
+/* Group Labels & Sider Trigger */
+.ant-menu-item-group-title {
+  color: #94a3b8 !important;
+}
+.dark .ant-menu-item-group-title {
+  color: #64748b !important;
+}
+.ant-layout-sider-trigger {
+  background-color: var(--main-color) !important;
+}
+
+/* Pagination (Dark Mode) */
+.dark .ant-pagination-item a {
+  color: #94a3b8 !important;
+}
+.dark .ant-pagination-item-active {
+  border-color: var(--main-color) !important;
+  background: transparent !important;
+}
+.dark .ant-pagination-item-active a {
+  color: var(--main-color) !important;
+}
+.dark
+  .ant-pagination-jump-prev
+  .ant-pagination-item-container
+  .ant-pagination-item-ellipsis,
+.dark
+  .ant-pagination-jump-next
+  .ant-pagination-item-container
+  .ant-pagination-item-ellipsis {
+  color: #64748b !important;
+}
+/* -----------------------------------------------------------
+   4.1 ANT DESIGN: COLLAPSED SIDEBAR & POPUPS
+   ----------------------------------------------------------- */
+
+/* ONLY apply these when the .dark class is active on the body/html */
+.dark .ant-menu-submenu-popup .ant-menu {
+  background-color: var(--bg-secondary) !important;
+  border: 1px solid #1e293b !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5) !important;
+}
+
+.dark .ant-menu-submenu-popup .ant-menu-item,
+.dark .ant-menu-submenu-popup .ant-menu-submenu-title {
+  color: var(--menu-text) !important;
+}
+
+.dark .ant-menu-submenu-popup .ant-menu-item:hover,
+.dark .ant-menu-submenu-popup .ant-menu-submenu-title:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: var(--main-color) !important;
+}
+
+.dark .ant-menu-submenu-popup .ant-menu-item-selected {
+  background-color: var(--main-accent-bg) !important;
+  color: var(--main-color) !important;
+}
+
+/* Vertical container fix for Dark Mode */
+.dark .ant-menu-submenu-popup .ant-menu-vertical {
+  background-color: var(--bg-secondary) !important;
+}
+
+/* -----------------------------------------------------------
+   LIGHT MODE POPUP ADJUSTMENTS (Optional)
+   If light mode popups still look weird, use this:
+   --------------------------------:root selector context ---- */
+:root .ant-menu-submenu-popup .ant-menu {
+  border-radius: 8px;
+}
+
+/* -----------------------------------------------------------
+   5. ANT DESIGN: OVERLAYS (Modals, Drawers, DatePicker)
+   ----------------------------------------------------------- */
+/* Backgrounds & Text */
+.dark .ant-modal-content,
+.dark .ant-modal-header,
+.dark .ant-drawer-content,
+.dark .ant-drawer-header,
+.dark .ant-picker-panel-container {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-base) !important;
+}
+
+.dark .ant-modal-close,
+.dark .ant-drawer-close {
+  color: #94a3b8 !important;
+}
+
+/* DatePicker Specifics */
+.dark .ant-picker-dropdown {
+  --ant-picker-bg: var(--bg-secondary) !important;
+  --ant-picker-border-color: #334155 !important;
+}
+.dark .ant-picker-header,
+.dark .ant-picker-header button,
+.dark .ant-picker-content th,
+.dark .ant-picker-content td {
+  color: var(--text-base) !important;
+}
+.dark .ant-picker-cell:not(.ant-picker-cell-in-view) .ant-picker-cell-inner {
+  color: #475569 !important;
+}
+.dark .ant-picker-cell-in-range::before {
+  background: var(--main-accent-bg) !important;
+}
+.dark .ant-picker-cell-selected .ant-picker-cell-inner {
+  background: var(--main-color) !important;
+  color: white !important;
+}
+
+/* -----------------------------------------------------------
+   6. THIRD PARTY & MISC (MUI, Scrollbars)
+   ----------------------------------------------------------- */
+/* MUI Dark Mode Fixes */
+.dark .MuiMenuItem-root {
+  color: #cbd5e1;
+}
+.dark .MuiListSubheader-root {
+  background-color: var(--bg-secondary) !important;
+  color: #94a3b8;
+}
+
+/* Modal/Drawer Scrollbar */
+.dark ::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+
+/* -----------------------------------------------------------
+   REGION: 7. DYNAMIC TOAST THEMING (SILEO)
+   ----------------------------------------------------------- */
+
+/* 1. Force the portal container to the absolute front */
+#toast-root {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999999 !important; /* Higher than any UI framework */
+  pointer-events: none;
+}
+
+/* 2. Target Sileo's actual container specifically */
+/* Libraries often use these class names. Adjust if you see 
+   different ones in the browser inspector */
+#toast-root > div,
+.sileo-toaster,
+.sileo-toast-container,
+[class*="sileo-toaster"] {
+  z-index: 999999 !important;
+  pointer-events: auto;
+}
+
+/* 3. Force Ant Design layers to stay at the baseline */
+.ant-modal-root,
+.ant-drawer-root,
+.ant-modal-mask,
+.ant-drawer-mask {
+  z-index: 1000 !important;
+}
+
+/* Ensure backdrop blur if needed */
+#toast-root [class*="sileo"] {
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}

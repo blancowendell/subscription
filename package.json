@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@fiveldevs/5ldev-pushflow": "^1.1.0"
+  },
+  "scripts": {
+    "start:work": "start-work",
+    "finish:work": "finish-work",
+    "version:release": "version-release"
+  }
+}

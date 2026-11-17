@@ -1,0 +1,110 @@
+
+require("dotenv").config();
+
+/**
+ * Module dependencies.
+ */
+var app = require('../server');
+var debug = require('debug')('mern_template:server');
+var http = require('http');
+
+/**
+ * Get port from environment and store in Express.
+ * We use 3005 as the default based on your previous code.
+ */
+const port = normalizePort(process.env._PORT);
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+var server = http.createServer(app);
+
+/**
+ * --------------------------------------------------------------
+ * ⭐ SOCKET.IO INITIALIZATION (Ticket System)
+ * --------------------------------------------------------------
+ */
+const { initSocket } = require('../services/sockets/socket');
+
+// Initialize the main Socket.io instance for your Ticket updates
+// This instance will handle the "TICKETS_CREATED" emits.
+const io = initSocket(server);
+
+// Make io accessible via the Express app object if needed elsewhere
+app.set("io", io);
+
+/**
+ * --------------------------------------------------------------
+ * ⭐ SIGNALING SERVER INIT (WebRTC)
+ * --------------------------------------------------------------
+ */
+const { initSignalingServer } = require('../lib/signaling');
+
+// Parse allowed origins from env
+const allowedOrigins = (process.env._CORS_ORIGINS || "")
+  .split(",")
+  .map(o => o.trim())
+  .filter(o => o.length > 0);
+
+/**
+ * IMPORTANT: We attach the signaling logic to the SAME server.
+ * If initSignalingServer creates its own 'new Server()', 
+ * ensure the paths do not overlap.
+ */
+initSignalingServer(server, {
+  path: "/signaling", // Change this path so it doesn't conflict with the default ticket socket
+  corsOrigins: allowedOrigins.length ? allowedOrigins : "*",
+  maxRoomSize: 2,
+  enableAuth: false 
+});
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+console.log(`🚀 Server running at http://localhost:${port}`);
+console.log(`🔌 Ticket Socket active on default path: /socket.io`);
+console.log(`📞 Signaling Socket active on path: /signaling`);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+  if (isNaN(port)) return val;
+  if (port >= 0) return port;
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+function onError(error) {
+  if (error.syscall !== 'listen') throw error;
+  var bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
