@@ -16,11 +16,15 @@ module.exports = (app) => {
 //#region ROUTES PUBLIC
     var loginRouter = require("./public/login.routes");
     var userLoginRouter = require("./public/userLogin.routes");
+    var clientAuthRouter = require("./public/clientAuth.routes");
+    var clientPortalRouter = require("./public/clientPortal.routes");
 //#endregion
 
 //#region ROUTES USE PUBLIC
     app.use("/", loginRouter);
     app.use("/user_login", userLoginRouter);
+    app.use("/client_auth", clientAuthRouter);
+    app.use("/client_portal", clientPortalRouter);
 //#endregion
 
 /* =======================
@@ -50,6 +54,14 @@ module.exports = (app) => {
     var auditLogsRouter = require("./private/auditLogs.routes");
     var maintenanceApiAccessRouter = require("./private/maintenanceApiAccess.routes");
     var systemSettingsRouter = require("./private/systemSettings.routes");
+    var masterPlanRouter = require("./private/masterPlan.routes");
+    var masterFeatureRouter = require("./private/masterFeature.routes");
+    var masterPlanFeatureRouter = require("./private/masterPlanFeature.routes");
+    var clientAccountRouter = require("./private/clientAccount.routes");
+    var clientUsersRouter = require("./private/clientUsers.routes");
+    var subscriptionRouter = require("./private/subscription.routes");
+    var subscriptionHistoryRouter = require("./private/subscriptionHistory.routes");
+    var provisionJobRouter = require("./private/provisionJob.routes");
 //#endregion
 
 //#region ROUTES USE PRIVATE
@@ -74,5 +86,13 @@ module.exports = (app) => {
     app.use("/audit_logs", auditLogsRouter);
     app.use("/maintenance_api_access", maintenanceApiAccessRouter);
     app.use("/system_settings", systemSettingsRouter);
+    app.use("/master_plan", masterPlanRouter);
+    app.use("/master_feature", masterFeatureRouter);
+    app.use("/master_plan_feature", masterPlanFeatureRouter);
+    app.use("/client_account", clientAccountRouter);
+    app.use("/client_users", clientUsersRouter);
+    app.use("/subscription", subscriptionRouter);
+    app.use("/subscription_history", subscriptionHistoryRouter);
+    app.use("/provision_job", provisionJobRouter);
 //#endregion
 };

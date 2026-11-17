@@ -10,6 +10,21 @@ import RequireAuth from "./components/Tokens/RequireAuth";
 import PermissionRoute from "./components/Tokens/PermissionRoute";
 import { AuthProvider } from "./api/public/auth/parts/authContext";
 import { PermissionsProvider } from "./api/public/auth/parts/permissionsContext";
+import { ClientAuthProvider } from "./api/client/clientAuthContext";
+import RequireClient from "./components/Client/RequireClient";
+
+// Landing page + client portal
+import Landing from "./pages/Public/Landing";
+import ClientSignUp from "./pages/Public/ClientSignUp";
+import ClientLogin from "./pages/Public/ClientLogin";
+import VerifyEmail from "./pages/Public/VerifyEmail";
+import ClientForgotPassword from "./pages/Public/ClientForgotPassword";
+import ResetPassword from "./pages/Public/ResetPassword";
+import ClientLayout from "./layouts/ClientLayout";
+import ClientDashboard from "./pages/Client/Dashboard";
+import ClientPlans from "./pages/Client/Plans";
+import ClientAccount from "./pages/Client/Account";
+import ClientUsersPage from "./pages/Client/Users";
 import DevTools from "./pages/Private/DevTools";
 // import Security from "./pages/Private/Security";
 // import AdminReports from "./pages/Private/Reports";
@@ -19,6 +34,9 @@ import ForgotPasswordPage from "./components/Pages/ForgotPassword";
 import "react-toastify/dist/ReactToastify.css";
 // import Accounting from "./pages/Private/Accounting";
 import Maintain from "./pages/Private/Maintain";
+import Plans from "./pages/Private/Plans";
+import Clients from "./pages/Private/Clients";
+import Subscriptions from "./pages/Private/Subscriptions";
 // import Inventory from "./pages/Private/Inventory";
 // import Customers from "./pages/Private/Customer";
 // import Invoicing from "./pages/Private/Invoicing";
@@ -46,6 +64,9 @@ const PAGE_ROUTES = [
   { path: "samplepage", element: <SamplePage /> },
   // { path: "accounting", element: <Accounting /> },
   { path: "maintainPanel", element: <Maintain /> },
+  { path: "plans", element: <Plans /> },
+  { path: "clients", element: <Clients /> },
+  { path: "subscriptions", element: <Subscriptions /> },
   // { path: "inventory", element: <Inventory /> },
   // { path: "warehouse", element: <WareHouse /> },
   // { path: "warrantyPanel", element: <Warranty /> },
@@ -75,12 +96,34 @@ function App() {
   return (
     <AuthProvider>
       <PermissionsProvider>
+        <ClientAuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<UserLoginPage />} />
+            {/* Landing page (customers) */}
+            <Route path="/" element={<Landing />} />
+
+            {/* Staff login moved from "/" to "/login" */}
+            <Route path="/login" element={<UserLoginPage />} />
             <Route path="/admin" element={<AdminLoginPage />} />
             <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
             <Route path="/unauthorized" element={<div>Access Denied</div>} />
+
+            {/* Client sign up, login and email links (paths must match the emails) */}
+            <Route path="/sign-up" element={<ClientSignUp />} />
+            <Route path="/client-login" element={<ClientLogin />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/client-forgot-password" element={<ClientForgotPassword />} />
+
+            {/* Client portal: needs a client session, separate from staff login */}
+            <Route path="/portal" element={<RequireClient />}>
+              <Route element={<ClientLayout />}>
+                <Route index element={<ClientDashboard />} />
+                <Route path="plans" element={<ClientPlans />} />
+                <Route path="account" element={<ClientAccount />} />
+                <Route path="users" element={<ClientUsersPage />} />
+              </Route>
+            </Route>
 
             {/* Every logged-in user, any role */}
             <Route path="/index" element={<RequireAuth />}>
@@ -104,6 +147,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
+        </ClientAuthProvider>
       </PermissionsProvider>
     </AuthProvider>
   );

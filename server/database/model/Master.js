@@ -592,6 +592,194 @@ const Master = {
 
   }
 },
+  master_plan: {
+  tablename: "master_plan",
+  prefix: "mp",
+  prefix_: "mp_",
+  insertColumns: [
+      "code",
+      "name",
+      "description",
+      "price_monthly",
+      "price_yearly",
+      "trial_days",
+      "grace_days",
+      "sort_order",
+      "is_public",
+      "status",
+      "create_date",
+      "create_by",
+      "update_date",
+      "update_by"
+    ],
+  selectColumns: [
+      "mp_id",
+      "mp_code",
+      "mp_name",
+      "mp_description",
+      "mp_price_monthly",
+      "mp_price_yearly",
+      "mp_trial_days",
+      "mp_grace_days",
+      "mp_sort_order",
+      "mp_is_public",
+      "mp_status",
+      "mp_create_date",
+      "mp_create_by",
+      "mp_update_date",
+      "mp_update_by"
+    ],
+  selectOptionColumns: {
+    id: "mp_id",
+    code: "mp_code",
+    name: "mp_name",
+    description: "mp_description",
+    price_monthly: "mp_price_monthly",
+    price_yearly: "mp_price_yearly",
+    trial_days: "mp_trial_days",
+    grace_days: "mp_grace_days",
+    sort_order: "mp_sort_order",
+    is_public: "mp_is_public",
+    status: "mp_status",
+    create_date: "mp_create_date",
+    create_by: "mp_create_by",
+    update_date: "mp_update_date",
+    update_by: "mp_update_by"
+  },
+  updateOptionColumns: {
+    id: "id",
+    code: "code",
+    name: "name",
+    description: "description",
+    price_monthly: "price_monthly",
+    price_yearly: "price_yearly",
+    trial_days: "trial_days",
+    grace_days: "grace_days",
+    sort_order: "sort_order",
+    is_public: "is_public",
+    status: "status",
+    create_date: "create_date",
+    create_by: "create_by",
+    update_date: "update_date",
+    update_by: "update_by"
+  },
+  selectDateFormatColumns: {
+    create_date: "REPLACE(REPLACE(mp_create_date, 'T', ' '), 'Z', '') AS mp_create_date",
+    update_date: "REPLACE(REPLACE(mp_update_date, 'T', ' '), 'Z', '') AS mp_update_date"
+  },
+  selectMiscColumns: {
+
+  }
+},
+  master_feature: {
+  tablename: "master_feature",
+  prefix: "mf",
+  prefix_: "mf_",
+  insertColumns: [
+      "code",
+      "name",
+      "module",
+      "type",
+      "description",
+      "sort_order",
+      "status",
+      "create_date",
+      "create_by",
+      "update_date",
+      "update_by"
+    ],
+  selectColumns: [
+      "mf_id",
+      "mf_code",
+      "mf_name",
+      "mf_module",
+      "mf_type",
+      "mf_description",
+      "mf_sort_order",
+      "mf_status",
+      "mf_create_date",
+      "mf_create_by",
+      "mf_update_date",
+      "mf_update_by"
+    ],
+  selectOptionColumns: {
+    id: "mf_id",
+    code: "mf_code",
+    name: "mf_name",
+    module: "mf_module",
+    type: "mf_type",
+    description: "mf_description",
+    sort_order: "mf_sort_order",
+    status: "mf_status",
+    create_date: "mf_create_date",
+    create_by: "mf_create_by",
+    update_date: "mf_update_date",
+    update_by: "mf_update_by"
+  },
+  updateOptionColumns: {
+    id: "id",
+    code: "code",
+    name: "name",
+    module: "module",
+    type: "type",
+    description: "description",
+    sort_order: "sort_order",
+    status: "status",
+    create_date: "create_date",
+    create_by: "create_by",
+    update_date: "update_date",
+    update_by: "update_by"
+  },
+  selectDateFormatColumns: {
+    create_date: "REPLACE(REPLACE(mf_create_date, 'T', ' '), 'Z', '') AS mf_create_date",
+    update_date: "REPLACE(REPLACE(mf_update_date, 'T', ' '), 'Z', '') AS mf_update_date"
+  },
+  selectMiscColumns: {
+
+  }
+},
+  master_plan_feature: {
+  tablename: "master_plan_feature",
+  prefix: "mpf",
+  prefix_: "mpf_",
+  insertColumns: [
+      "plan_id",
+      "feature_id",
+      "limit_value",
+      "create_date",
+      "create_by"
+    ],
+  selectColumns: [
+      "mpf_id",
+      "mpf_plan_id",
+      "mpf_feature_id",
+      "mpf_limit_value",
+      "mpf_create_date",
+      "mpf_create_by"
+    ],
+  selectOptionColumns: {
+    id: "mpf_id",
+    plan_id: "mpf_plan_id",
+    feature_id: "mpf_feature_id",
+    limit_value: "mpf_limit_value",
+    create_date: "mpf_create_date",
+    create_by: "mpf_create_by"
+  },
+  updateOptionColumns: {
+    id: "id",
+    plan_id: "plan_id",
+    feature_id: "feature_id",
+    limit_value: "limit_value",
+    create_date: "create_date",
+    create_by: "create_by"
+  },
+  selectDateFormatColumns: {
+    create_date: "REPLACE(REPLACE(mpf_create_date, 'T', ' '), 'Z', '') AS mpf_create_date"
+  },
+  selectMiscColumns: {
+
+  }
+},
 };
 
 exports.Master = Master;
