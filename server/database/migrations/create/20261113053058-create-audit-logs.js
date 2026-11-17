@@ -12,7 +12,7 @@ module.exports = {
         allowNull: false,
       },
       al_system: {
-        type: Sequelize.ENUM("BOOKS", "INVENTORY", "OPERATIONS", "ECOM"),
+        type: Sequelize.ENUM("BOOKS", "INVENTORY", "OPERATIONS", "ECOM", "SUBSCRIPTION", "ERP"),
         allowNull: false,
       },
       // al_id from the origin system's local audit_logs (null for BOOKS)
@@ -24,21 +24,10 @@ module.exports = {
         type: Sequelize.STRING(100),
         allowNull: false,
       },
+      // Free text so each module can log its own actions
+      // (CREATE, UPDATE, LOGIN, SIGN_UP, RENEW, EXTEND, QUEUE, INVITE_USER...)
       al_action: {
-        type: Sequelize.ENUM(
-          "CREATE",
-          "UPDATE",
-          "DELETE",
-          "VOID",
-          "APPROVE",
-          "REJECT",
-          "LOGIN",
-          "LOGIN_FAILED",
-          "LOGOUT",
-          "EXPORT",
-          "PRINT",
-          "SYNC",
-        ),
+        type: Sequelize.STRING(50),
         allowNull: false,
       },
       al_entity: {
@@ -58,8 +47,9 @@ module.exports = {
         type: Sequelize.STRING(50),
         allowNull: true,
       },
+      // MASTER/EMPLOYEE = staff, CLIENT = client portal users, SYSTEM = background jobs
       al_user_source: {
-        type: Sequelize.ENUM("MASTER", "EMPLOYEE"),
+        type: Sequelize.ENUM("MASTER", "EMPLOYEE", "CLIENT", "SYSTEM"),
         allowNull: true,
       },
       // Snapshots at time of action

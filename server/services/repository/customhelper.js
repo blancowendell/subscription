@@ -202,6 +202,28 @@ exports.AddDay = (idate, index) => {
   return newDate.format("YYYY-MM-DD");
 };
 
+// Adds months to a YYYY-MM-DD date. Clamps to month end (Jan 31 + 1 month = Feb 28/29).
+exports.AddMonth = (idate, index) => {
+  return moment(`${idate}`, "YYYY-MM-DD").add(index, "months").format("YYYY-MM-DD");
+};
+
+// Strict YYYY-MM-DD check (rejects 2026-02-30).
+exports.IsValidDate = (datestring) => {
+  return moment(`${datestring}`, "YYYY-MM-DD", true).isValid();
+};
+
+// True when date1 is before date2 (day precision).
+exports.IsDateBefore = (date1, date2) => {
+  return moment(`${date1}`, "YYYY-MM-DD").isBefore(moment(`${date2}`, "YYYY-MM-DD"), "day");
+};
+
+// Returns the later of two YYYY-MM-DD dates.
+exports.MaxDate = (date1, date2) => {
+  return moment(`${date1}`, "YYYY-MM-DD").isSameOrAfter(moment(`${date2}`, "YYYY-MM-DD"), "day")
+    ? date1
+    : date2;
+};
+
 exports.ConvertToDate = (datestring) => {
   if (typeof datestring === "string") {
     return moment(datestring).format("YYYY-MM-DD");

@@ -1,6 +1,6 @@
 import { AiOutlineDashboard, AiOutlineSetting } from "react-icons/ai";
 import { FaRegFileCode } from "react-icons/fa";
-import { TbCategory, TbReport, TbChartPie } from "react-icons/tb";
+import { TbCategory, TbReport, TbChartPie, TbCreditCard } from "react-icons/tb";
 import { GrHostMaintenance, GrTask } from "react-icons/gr";
 import { MdOutlineInventory2, MdOutlineHistory } from "react-icons/md";
 
@@ -18,6 +18,16 @@ export const MENU_CONFIG = [
       // { key: "vendorPanel", label: "Vendor", link: "vendor" },
       { key: "employeePanel", label: "Employee", link: "employees" },
       // { key: "samplePagePanel", label: "Sample Page", link: "samplepage" },
+    ],
+  },
+  {
+    key: "subscriptionTabs",
+    icon: <TbCreditCard size={20} />,
+    label: "Subscriptions",
+    children: [
+      { key: "plansPanel", label: "Plans", link: "plans" },
+      { key: "clientsPanel", label: "Clients", link: "clients" },
+      { key: "subscriptionsPanel", label: "Subscriptions", link: "subscriptions" },
     ],
   },
   // {
@@ -65,17 +75,13 @@ export const MENU_CONFIG = [
     key: "settingTabs",
     icon: <AiOutlineSetting size={20} />,
     label: "Settings",
-    children: [
-      { key: "settingsPanel", label: "Settings", link: "settings" },
-    ],
+    children: [{ key: "settingsPanel", label: "Settings", link: "settings" }],
   },
   {
     key: "developerTabs",
     icon: <FaRegFileCode size={20} />,
     label: "Developer Tabs",
-    children: [
-      { key: "devToolsPanel", label: "Dev Tools", link: "devtools" },
-    ],
+    children: [{ key: "devToolsPanel", label: "Dev Tools", link: "devtools" }],
   },
 ];
 
